@@ -6,102 +6,77 @@ using System.Threading.Tasks;
 
 namespace SÆNKE_SLAGSKIBE
 {
-    class Program
+    public class Program
     {
+        
+
         static void Main(string[] args)
         {
-            string A1 = "A1";
-            string B1 = "B1";
-            string C1 = "C1";
-            string D1 = "D1";
-            string E1 = "E1";
-           
-            string[] slagskib1 = new string[5] { "A1", "B1", "C1", "D1", "E1" };
-
-            string A2 = "A2";
-            string B2 = "B2";
-            string C2 = "C2";
-            string D2 = "D2";
-            string E2 = "E2";
-
-            string[] slagskib2 = new string[5] { "A2", "B2", "C2", "D2", "E2" };
-
-            string A3 = "A3";
-            string B3 = "B3";
-            string C3 = "C3";
-            string D3 = "D3";
-            string E3 = "E3";
-
-            string[] slagskib3 = new string[5] { "A3", "B3", "C3", "D3", "E3" };
-
-            string A4 = "A4";
-            string B4 = "B4";
-            string C4 = "C4";
-            string D4 = "D4";
-            string E4 = "E4";
-
-            string[] slagskib4 = new string[5] { "A4", "B4", "C4", "D4", "E4" };
-
-            string A5 = "A5";
-            string B5 = "B5";
-            string C5 = "C5";
-            string D5 = "D5";
-            string E5 = "E5";
-
-            string[] slagskib5 = new string[5] { "A5", "B5", "C5", "D5", "E5" };
+            Console.WriteLine("My area:");
+            string[] slagskibsplade_min = new string[25] { " A1", "B1", "C1", "D1", "E1\n", "A2", "B2", "C2", "D2", "E2\n", "A3", "B3", "C3", "D3", "E3\n", "A4", "B4", "C4", "D4", "E4\n", "A5", "B5", "C5", "D5", "E5" };            
             
-            foreach(string plads1 in slagskib1)
+            List<string> allefelter_min = new List<string>();
+
+            foreach (string plads1 in slagskibsplade_min)
             {
-                Console.Write(plads1 +" ");
+                Console.Write(plads1 + " ");
+                allefelter_min.Add(plads1);
             }
             Console.WriteLine();
-            foreach (string plads2 in slagskib2)
+            Console.WriteLine();
+
+            Console.WriteLine("My opponents area:");
+            string[] slagskibsplade_modstander = new string[25] { " F1", "G1", "H1", "I1", "J1\n", "F2", "G2", "H2", "I2", "J2\n", "F3", "G3", "H3", "I3", "J3\n", "F4", "G4", "H4", "I4", "J4\n", "F5", "G5", "H5", "I5", "J5" };
+
+            List<string> allefelter_modstander = new List<string>();
+
+            foreach (string plads2 in slagskibsplade_modstander)
             {
                 Console.Write(plads2 + " ");
-            }
-            Console.WriteLine();
-            foreach (string plads3 in slagskib3)
-            {
-                Console.Write(plads3 + " ");
-            }
-            Console.WriteLine();
-            foreach (string plads4 in slagskib4)
-            {
-                Console.Write(plads4 + " ");
-            }
-            Console.WriteLine();
-            foreach (string plads5 in slagskib5)
-            {
-                Console.Write(plads5 + " ");
+                allefelter_modstander.Add(plads2);
             }
 
             Console.WriteLine();
             Console.WriteLine();
-            string boat;
+            string boat_mine; //jeg placerer min båd
             Console.WriteLine("Enter the place of your boat ");
-            boat = Console.ReadLine();
+            boat_mine = Console.ReadLine();
             Console.WriteLine();
-            Console.WriteLine("Your boat is placed at: " + boat);
+            Console.WriteLine("Your boat is placed at: " + boat_mine);
 
-            string bomb;
-            Console.WriteLine("Place your bomb");
-            bomb = Console.ReadLine();
+            Random rnd = new Random(); //PC placerer sin båd et tilfældigt sted på sin plade.
+            List<Slagskib> heleliste = new List<Slagskib>(); //laver ny liste
+            string skib_modstander = slagskibsplade_modstander[rnd.Next(0, 25)];
+
+            string bomb_mine;
+            Console.WriteLine("Place your bomb"); //Jeg bomber min modstander.
+            bomb_mine = Console.ReadLine();
             Console.WriteLine();
-            Console.WriteLine("Your boat is placed at: " + bomb);
-            if (bomb == boat)
-                Console.WriteLine("You lost the ship");
-            else
-                while (bomb != boat)
-                {
+            Console.WriteLine("Your boat is placed at: " + bomb_mine);
+
+            List<Bombe> heleliste2 = new List<Bombe>(); //laver ny liste
+            string bombe_modstander = slagskibsplade_min[rnd.Next(0, 25)]; //modstander bomber mig
+
+
+
+            while (bombe_modstander != boat_mine && bomb_mine != skib_modstander)
+            {
                 Console.WriteLine("Try again");
                 Console.WriteLine("Place your bomb");
-                bomb = Console.ReadLine();
-                }
-            Console.WriteLine("You lost the ship");
-            Console.ReadKey();
+                bomb_mine = Console.ReadLine();
 
+                Console.WriteLine("Now the PC will bomb you");
+                bombe_modstander = slagskibsplade_min[rnd.Next(0, 25)]; //modstander bomber mig
+            }
+            if (bombe_modstander == boat_mine)
+                Console.WriteLine("I lost and the PC won ! !, the PC placed its ship at: " + skib_modstander);
             
-
+            else
+                Console.WriteLine("I won and the PC lost ! !, the PC placed its ship at: " + skib_modstander);
+                Console.WriteLine();
+                Console.WriteLine();
+            Console.ReadKey();
         }
+
     }
 }
